@@ -1,9 +1,0 @@
-1348512936510	Encapsulate field 'detailsUrl'
-1348512994771	Encapsulate field 'thumbImageUrl'
-1348513130199	Encapsulate field 'screenThumbImageUrl'
-1348513663451	Rename type 'Console'
-1348514074366	Encapsulate field 'gameId'
-1348514493539	Encapsulate field 'summary'
-1348517448562	Encapsulate field 'availableGames'
-1348517629075	Encapsulate field 'publishedOn'
-1348685266961	Delete element

@@ -1,6 +1,0 @@
-1339778550937	Rename type 'MovieDbApiClient'
-1339778559756	Rename type 'MovieDbException'
-1339778566116	Rename type 'MovieDbImportService'
-1339778579234	Rename type 'MovieDbJsonMapper'
-1339778589025	Rename type 'MovieDbLocalStorage'
-1339778595544	Rename type 'MovieImporter'
