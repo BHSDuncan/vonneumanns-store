@@ -1,0 +1,7 @@
+neo4j/.metadata/
+neo4j/store/data/
+.metadata/
+neo4j/store/target/
+neo4j/Servers/
+Servers/
+RemoteSystemsTempFiles/

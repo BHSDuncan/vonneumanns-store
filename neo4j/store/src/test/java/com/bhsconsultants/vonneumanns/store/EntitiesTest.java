@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.Set;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -142,6 +143,12 @@ public class EntitiesTest
 		Stock game1 = new Game(GAME_TITLE, GAME_DESC, STOCK_QTY, PRICE);
 		Stock game2 = new Game(GAME_TITLE_2, GAME_DESC_2, STOCK_QTY + 5, PRICE + 5);
 
+		
+		// TEST
+		customer1.addStockPurchase(game1);
+		customer1.addStockPurchase(game2);
+		
+		
 		// save entities BEFORE saving the relationships!
 		template.save(game1);
 		template.save(game2);
@@ -154,6 +161,20 @@ public class EntitiesTest
 		
 		// retrieve the customer
 		Customer customer1Found = this.customerRepository.findBySchemaPropertyValue("firstName", FIRST_NAME);
+		
+		Set<Stock> s = customer1Found.getStockPurchased();
+		
+		Iterator<Stock> si = s.iterator();
+		
+		while (si.hasNext())
+		{
+			Stock st = si.next();
+			Game gc = (Game)st;
+			
+			String a = st.getTitle();			
+			
+			String b = "";
+		}
 		
 		//
 		// Tests
@@ -265,4 +286,5 @@ public class EntitiesTest
 		
 	}
 	
+
 }

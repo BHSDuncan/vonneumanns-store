@@ -37,6 +37,10 @@ public class Customer {
 	@RelatedToVia(type = "PURCHASED", direction = Direction.OUTGOING, elementClass = Purchase.class)
 	@Fetch
     Iterable<Purchase> purchases;
+	
+	// this is for testing: http://stackoverflow.com/questions/22621789/spring-data-neo4j-class-polymorphism
+	@Fetch
+	Set<Stock> stockPurchased;
 
 	// methods
 	public void addFriend(Customer friend) {
@@ -44,6 +48,21 @@ public class Customer {
 			 this.friends = new LinkedHashSet<Customer>();
 		
 		this.friends.add(friend);
+	}
+	
+	// this is for testing: http://stackoverflow.com/questions/22621789/spring-data-neo4j-class-polymorphism
+	public void addStockPurchase(Stock item)
+	{
+		if (this.stockPurchased == null)
+			this.stockPurchased = new LinkedHashSet<Stock>();
+		
+		this.stockPurchased.add(item);
+	}
+	
+	public Set<Stock> getStockPurchased()
+	{
+		// eagerly loaded
+		return this.stockPurchased;
 	}
 	
 	public Purchase makePurchase(Neo4jOperations template, Stock item, int quantity)
