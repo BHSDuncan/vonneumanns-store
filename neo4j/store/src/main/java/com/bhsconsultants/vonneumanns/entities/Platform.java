@@ -5,24 +5,21 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.neo4j.graphdb.Direction;
-import org.springframework.data.neo4j.annotation.GraphId;
-import org.springframework.data.neo4j.annotation.Indexed;
-import org.springframework.data.neo4j.annotation.NodeEntity;
-import org.springframework.data.neo4j.annotation.RelatedTo;
-import org.springframework.data.neo4j.support.index.IndexType;
+import org.neo4j.ogm.annotation.GraphId;
+import org.neo4j.ogm.annotation.NodeEntity;
+import org.neo4j.ogm.annotation.Relationship;
 
 @NodeEntity
 public class Platform {
 	@GraphId
 	private Long nodeId;
 	
-	@Indexed
 	private String platformId;
 	
-	@Indexed(indexType = IndexType.FULLTEXT, indexName = "platformNameSearch")
+	//@Indexed(indexType = IndexType.FULLTEXT, indexName = "platformNameSearch")
 	private String name;
 	
-	@Indexed(indexType = IndexType.FULLTEXT, indexName = "platformCompanySearch")
+	//@Indexed(indexType = IndexType.FULLTEXT, indexName = "platformCompanySearch")
 	private String company;
 	
 	private String description;
@@ -31,7 +28,7 @@ public class Platform {
 	private Date releaseDate;
 	private Integer installBase;
 	
-	@RelatedTo(type = "PUBLISHED_ON", elementClass = Game.class, direction = Direction.INCOMING)
+	@Relationship(type = "PUBLISHED_ON", direction = Relationship.INCOMING)
 	private Set<Game> availableGames = new HashSet<Game>();
 	
 	// methods

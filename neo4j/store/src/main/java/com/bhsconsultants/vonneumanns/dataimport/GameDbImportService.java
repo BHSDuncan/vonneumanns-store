@@ -199,7 +199,8 @@ public class GameDbImportService {
         // Bug: DATAGRAPH-453
         //Platform platform = template.lookup(Platform.class, "platformId", platformId).to(Platform.class).singleOrNull();
         
-        Platform platform = platformRepository.findBySchemaPropertyValue("platformId", platformId);
+        //Platform platform = platformRepository.findBySchemaPropertyValue("platformId", platformId);
+        Platform platform = platformRepository.findByPlatformId(platformId);
         
         if (platform != null) return platform;
         

@@ -1,6 +1,10 @@
 package com.bhsconsultants.vonneumanns.dataimport;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
+
+import com.bhsconsultants.vonneumanns.config.StoreConfiguration;
 
 import java.util.Collections;
 import java.util.Map;
@@ -15,13 +19,17 @@ public class GameImporter {
 
     public static void main(String[] args) {
         //final FileSystemXmlApplicationContext ctx = new FileSystemXmlApplicationContext("src/main/webapp/WEB-INF/applicationContext.xml");
-        final FileSystemXmlApplicationContext ctx = new FileSystemXmlApplicationContext("beans.xml");
+        //final FileSystemXmlApplicationContext ctx = new FileSystemXmlApplicationContext("beans.xml");
+        final ApplicationContext ctx = new AnnotationConfigApplicationContext(StoreConfiguration.class);
+        
         try {
             final GameDbImportService importer = ctx.getBean(GameDbImportService.class);
             final GameImporter GameImporter = new GameImporter(importer);
             GameImporter.runImport(getGameIdsToImport(args));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         } finally {
-            ctx.close();
+            //ctx.close();
         }
     }
 

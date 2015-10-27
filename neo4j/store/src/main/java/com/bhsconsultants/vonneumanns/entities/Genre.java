@@ -1,8 +1,7 @@
 package com.bhsconsultants.vonneumanns.entities;
 
-import org.springframework.data.neo4j.annotation.GraphId;
-import org.springframework.data.neo4j.annotation.Indexed;
-import org.springframework.data.neo4j.annotation.NodeEntity;
+import org.neo4j.ogm.annotation.GraphId;
+import org.neo4j.ogm.annotation.NodeEntity;
 
 @NodeEntity
 public class Genre {
@@ -10,7 +9,6 @@ public class Genre {
 	@GraphId
 	private Long nodeId;
 	
-	@Indexed
 	private String genreId;
 	
 	private String name;

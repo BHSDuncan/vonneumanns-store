@@ -3,24 +3,21 @@ package com.bhsconsultants.vonneumanns.entities;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.neo4j.graphdb.Direction;
-import org.springframework.data.neo4j.annotation.GraphId;
-import org.springframework.data.neo4j.annotation.Indexed;
-import org.springframework.data.neo4j.annotation.NodeEntity;
-import org.springframework.data.neo4j.annotation.RelatedTo;
+import org.neo4j.ogm.annotation.GraphId;
+import org.neo4j.ogm.annotation.NodeEntity;
+import org.neo4j.ogm.annotation.Relationship;
 
 @NodeEntity
 public class Person {
 	@GraphId
 	private Long nodeId;
 	
-	@Indexed
 	private String personId;
 
 	private String name;
 	private String role;
 
-	@RelatedTo(type = "WORKED_ON", elementClass = Game.class, direction = Direction.OUTGOING)
+	@Relationship(type = "WORKED_ON", direction = Relationship.OUTGOING)
 	private Set<Game> workedOn = new HashSet<Game>();
 
 	// methods

@@ -5,12 +5,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.neo4j.graphdb.Direction;
-import org.springframework.data.neo4j.annotation.Indexed;
-import org.springframework.data.neo4j.annotation.RelatedTo;
+import org.neo4j.ogm.annotation.Relationship;
 
 public class Game extends Stock {
 	
-	@Indexed
 	private String gameId;
 	
 	// game attributes
@@ -21,16 +19,17 @@ public class Game extends Stock {
 	private String detailsUrl;
 
 	// game relationships
-	@RelatedTo(type = "PUBLISHED_ON")
+	@Relationship(type = "PUBLISHED_ON")
 	private Set<Platform> publishedOn;
 
-	@RelatedTo(type = "SIMILAR_GAMES", elementClass = Game.class, direction = Direction.BOTH)
+	@Relationship(type = "SIMILAR_GAMES", direction = Relationship.UNDIRECTED)
 	private Set<Game> similarGames = new HashSet<Game>();
 	
-	@RelatedTo(type = "IS_IN_GENRE", elementClass = Genre.class)
+	//@RelatedTo(type = "IS_IN_GENRE", elementClass = Genre.class)
+	@Relationship(type = "IS_IN_GENRE")
 	private Set<Genre> genres = new HashSet<Genre>();
 	
-	@RelatedTo(type = "WORKED_ON", direction = Direction.INCOMING)
+	@Relationship(type = "WORKED_ON", direction = Relationship.INCOMING)
 	private Iterable<Person> contributors;
 	
 	public Game()

@@ -1,14 +1,5 @@
 package com.bhsconsultants.vonneumanns.entities;
 
-import org.springframework.data.neo4j.annotation.Fetch;
-import org.springframework.data.neo4j.annotation.GraphId;
-import org.springframework.data.neo4j.annotation.Indexed;
-import org.springframework.data.neo4j.annotation.NodeEntity;
-import org.springframework.data.neo4j.annotation.RelatedTo;
-import org.springframework.data.neo4j.annotation.RelatedToVia;
-import org.springframework.data.neo4j.template.Neo4jOperations;
-import org.neo4j.graphdb.Direction;
-
 import com.bhsconsultants.vonneumanns.entities.Purchase;
 import com.bhsconsultants.vonneumanns.entities.Stock;
 
@@ -16,30 +7,29 @@ import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import org.neo4j.ogm.annotation.GraphId;
+import org.neo4j.ogm.annotation.NodeEntity;
+import org.neo4j.ogm.annotation.Relationship;
+import org.springframework.data.neo4j.template.Neo4jOperations;
+
 @NodeEntity
 public class Customer {
 	@GraphId
-	Long id;
+	private Long id;
 	
 	private String username;
 	
-	@Indexed
 	private String firstName;
-	
-	@Indexed
 	private String lastName;
 	private String email;
 	
-	@RelatedTo(type = "FRIEND", direction = Direction.BOTH)
-	@Fetch
+	@Relationship(type = "FRIEND", direction = Relationship.UNDIRECTED)
     Set<Customer> friends;
 	
-	@RelatedToVia(type = "PURCHASED", direction = Direction.OUTGOING, elementClass = Purchase.class)
-	@Fetch
+	@Relationship(type = "PURCHASED", direction = Relationship.OUTGOING)
     Iterable<Purchase> purchases;
 	
 	// this is for testing: http://stackoverflow.com/questions/22621789/spring-data-neo4j-class-polymorphism
-	@Fetch
 	Set<Stock> stockPurchased;
 
 	// methods
@@ -67,13 +57,14 @@ public class Customer {
 	
 	public Purchase makePurchase(Neo4jOperations template, Stock item, int quantity)
 	{
-		final Purchase purchase = template.createRelationshipBetween(this, item, Purchase.class, "PURCHASED", false); //.make(item, quantity);
-		Purchase toReturn = null;
+		//final Purchase purchase = template.createRelationshipBetween(this, item, Purchase.class, "PURCHASED", false); //.make(item, quantity);
+		final Purchase purchase = new Purchase();
+		purchase.setCustomer(this);
+		purchase.setItem(item);
+			
+		template.save(purchase);
 		
-		if (purchase != null)
-			toReturn = template.save(purchase);
-		
-		return toReturn;
+		return purchase;
 	}
 	
 	// use this to get suggestions based on what other people who bought this also got

@@ -160,7 +160,7 @@ public class EntitiesTest
 		Purchase p2 = customer1.makePurchase(template, game2, QTY);
 		
 		// retrieve the customer
-		Customer customer1Found = this.customerRepository.findBySchemaPropertyValue("firstName", FIRST_NAME);
+		Customer customer1Found = this.customerRepository.findByFirstName(FIRST_NAME);
 		
 		Set<Stock> s = customer1Found.getStockPurchased();
 		
@@ -203,13 +203,15 @@ public class EntitiesTest
 		
 		// retrieving objects via Spring Data pulls lazily by default; for eager mapping, use @Fetch (but be forewarned!)
 		// ...this means we have to use the fetch() method to finish loading related objects
-		Stock s1 = template.fetch(purchase1.getItem());
+		//Stock s1 = template.fetch(purchase1.getItem());
+		Stock s1 = purchase1.getItem();
 		
 		// can we retrieve our first purchase successfully w/ its details?
 		assertEquals("Purchased item not persisted properly.", GAME_TITLE, s1.getTitle());
 
 		purchase1 = purchIt.next();		
-		Stock s2 = template.fetch(purchase1.getItem());
+		//Stock s2 = template.fetch(purchase1.getItem());
+		Stock s2 = purchase1.getItem();
 		
 		// can we retrieve our second purchase successfully w/ its details?
 		assertEquals("Purchased item not persisted properly.", GAME_TITLE_2, s2.getTitle());
@@ -235,7 +237,7 @@ public class EntitiesTest
 		// we can't just continue to add friends to this.c2, as once we try to save this.c2, it'll remove the duplicate relationship between c1 and c2.
 		// ...so, to get around this, we retrieve the persisted object from the DB
 		//Customer c2Found = customerRepository.findByPropertyValue("lastName", C2_LNAME);
-		Customer c2Found = customerRepository.findBySchemaPropertyValue("lastName", C2_LNAME); // updated for SDN 3.0.1
+		Customer c2Found = customerRepository.findByLastName(C2_LNAME);
 		c2Found.addFriend(c3);
 		c2Found.addFriend(c4);
 		c2Found.addFriend(c5);
@@ -244,7 +246,8 @@ public class EntitiesTest
 		customerRepository.save(c2Found);
 
 		// retrieve c1 for some tests
-		Customer c1Found = customerRepository.findBySchemaPropertyValue("lastName", C1_LNAME);
+		//Customer c1Found = customerRepository.findBySchemaPropertyValue("lastName", C1_LNAME);
+		Customer c1Found = customerRepository.findByLastName(C1_LNAME);
 		
 		Iterable<Customer> c1Friends = c1Found.getFriends();
 		Collection<Customer> c1FriendsSet = IteratorUtil.asCollection(c1Friends);

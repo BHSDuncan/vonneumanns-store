@@ -1,12 +1,9 @@
 package com.bhsconsultants.vonneumanns.entities;
 
 import org.neo4j.graphdb.Direction;
-import org.springframework.data.neo4j.annotation.Fetch;
-import org.springframework.data.neo4j.annotation.GraphId;
-import org.springframework.data.neo4j.annotation.Indexed;
-import org.springframework.data.neo4j.annotation.NodeEntity;
-import org.springframework.data.neo4j.annotation.RelatedToVia;
-import org.springframework.data.neo4j.support.index.IndexType;
+import org.neo4j.ogm.annotation.GraphId;
+import org.neo4j.ogm.annotation.NodeEntity;
+import org.neo4j.ogm.annotation.Relationship;
 
 import com.bhsconsultants.vonneumanns.exceptions.InsufficientQuantityException;
 
@@ -15,16 +12,16 @@ public abstract class Stock {
 	@GraphId
 	Long nodeId;
 	
-	@Indexed(indexType = IndexType.FULLTEXT, indexName = "titleSearch")
+	//@Indexed(indexType = IndexType.FULLTEXT, indexName = "titleSearch")
 	private String title;
 	
-	@Indexed(indexType = IndexType.FULLTEXT, indexName = "descriptionSearch")
+	//@Indexed(indexType = IndexType.FULLTEXT, indexName = "descriptionSearch")
 	private String description;
 	private int quantity;
 	private float price;
 
-	@RelatedToVia(type = "PURCHASED", direction = Direction.INCOMING, elementClass = Purchase.class)
-	@Fetch
+	@Relationship(type = "PURCHASED", direction = Relationship.INCOMING)
+	//@Fetch
     Iterable<Purchase> purchases;
 	
 	// methods
