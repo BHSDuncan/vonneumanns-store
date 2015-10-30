@@ -1398,11 +1398,12 @@ they reach her building to hear horrifying screams -- which begin a long nightma
             Map imageMap = (Map)data.get("company");
             platform.setCompany(getStringFromMap(imageMap, "name"));
             platform.setSummary((String)data.get("deck"));
-            platform.setInstallBase(((Integer) data.get("install_base")));
+            platform.setInstallBase(((Integer.getInteger(data.get("install_base").toString()))));
             imageMap = (Map)data.get("image");
             platform.setImageUrl(getStringFromMap(imageMap, "icon_url"));
         } catch (Exception e) {
-            throw new GameDbException("Failed to map json for platform", e);
+            //throw new GameDbException("Failed to map json for platform", e);
+            // just continue
         }
     }
 
@@ -1429,7 +1430,8 @@ they reach her building to hear horrifying screams -- which begin a long nightma
             person.setName((String) data.get("name"));
             person.setRole((String) data.get("role"));
         } catch (Exception e) {
-            throw new GameDbException("Failed to map json for role", e);
+            //throw new GameDbException("Failed to map json for role", e);
+            // just continue
         }
     }
 

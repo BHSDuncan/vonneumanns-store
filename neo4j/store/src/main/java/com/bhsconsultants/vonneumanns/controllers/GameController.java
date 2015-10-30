@@ -3,8 +3,10 @@ package com.bhsconsultants.vonneumanns.controllers;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.neo4j.graphdb.Node;
 import org.neo4j.helpers.collection.IteratorUtil;
@@ -19,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.bhsconsultants.vonneumanns.entities.Game;
 import com.bhsconsultants.vonneumanns.repositories.GameRepository;
-//import com.bhsconsultants.vonneumanns.repositories.GameRepository.GameData;
 
 @Controller
 public class GameController {
@@ -89,6 +90,27 @@ public class GameController {
 	public String processSubmit(Model model, @RequestParam(value="lstGames1", required=true) Integer game1Id, @RequestParam(value="lstGames2", required=true) Integer game2Id)
 	{
 		System.out.println("Selected " + game1Id.toString() + " and " + game2Id.toString());
+		
+		Iterable<Map<String, Object> > retPath = this.gameRepository.getPath(game1Id.toString(), game2Id.toString());
+		
+		if (retPath != null) {
+		    Iterator<Map<String, Object> > iter = retPath.iterator();
+		    
+		    while (iter.hasNext()) {
+		        System.out.println("Start new map");
+		        
+		        Map<String, Object> m = iter.next();
+		        Set<String> keys = m.keySet();
+		        
+		        for (String k : keys) {		        
+		            System.out.println("  Key: " + k);
+		            
+		            Object v = m.get(k);
+		            System.out.println("  Value: " + v.toString());
+		        }
+		    }
+		    
+		}
 		
 		return "index";
 	}

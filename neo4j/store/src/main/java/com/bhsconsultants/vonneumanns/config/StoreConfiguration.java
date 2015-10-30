@@ -42,7 +42,7 @@ public class StoreConfiguration extends Neo4jConfiguration {
     }
     
     @Bean
-    @Scope(value = "session", proxyMode = ScopedProxyMode.TARGET_CLASS)
+    //@Scope(value = "session", proxyMode = ScopedProxyMode.TARGET_CLASS)
     public Session getSession() throws Exception {
         return super.getSession();
     }

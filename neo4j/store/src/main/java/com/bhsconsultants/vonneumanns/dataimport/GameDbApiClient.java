@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class GameDbApiClient {
 
-    private final String baseUrl = "http://api.giantbomb.com";
+    private final String baseUrl = "http://www.giantbomb.com/api";
     private final String apiKey;
     private final String format;
     protected final ObjectMapper mapper;
